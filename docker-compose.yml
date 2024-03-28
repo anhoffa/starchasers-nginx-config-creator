@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  nginx-config-creator:
+    build:
+      context: .
+    volumes:
+      - type: volume
+        source: backup_vol
+        target: /app/persistent
+    ports:
+      - "80:80"
+      - "8080:8080"
+    environment:
+      - CGO_ENABLED=0
+    command: [ "./start.sh" ]
+
+volumes:
+  backup_vol:
+    driver: local
