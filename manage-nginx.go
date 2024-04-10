@@ -2,14 +2,13 @@ package main
 
 import (
 	"fmt"
+	"github.com/annahoffa/starchasers-nginx-config-creator/utils"
 	"os"
-	"os/exec"
 )
 
 // reloadNginxConfig reloads the Nginx configuration without stopping the service
 func reloadNginxConfig() error {
-	cmd := exec.Command("nginx", "-s", "reload")
-	if err := cmd.Run(); err != nil {
+	if err := utils.RedirectCmdOutput("nginx", "-s", "reload"); err != nil {
 		return fmt.Errorf("failed to reload Nginx configuration: %w", err)
 	}
 	log.Info("Nginx configuration reloaded successfully")
