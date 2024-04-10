@@ -1,0 +1,40 @@
+version: '3'
+
+services:
+  postgres:
+    image: postgres
+    hostname: postgres
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: 'directus'
+      POSTGRES_PASSWORD: 'directus'
+      POSTGRES_DB: 'directus'
+  directus:
+    image: docker.snet.ovh/spm/admin:1.0.1
+    ports:
+      - "8055:8055"
+    networks:
+      - spm
+      - default
+    environment:
+      KEY: Starchasers-Proxy-Manager
+      SECRET: "t6CnJtT*RLLNm2CY5ooqHSqE3he*#FT5q2EEzF^wfD9$%u^S^WKf6fxjdGkaDmMj"
+      CACHE_ENABLED: false
+      DB_CLIENT: "pg"
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_DATABASE: directus
+      DB_USER: "directus"
+      DB_PASSWORD: "directus"
+      RATE_LIMITER_ENABLED: false
+      ADMIN_EMAIL: "admin@example.com"
+      ADMIN_PASSWORD: "admin@example.com"
+      SPM_WEBHOOK_SECRET: "09sPuPvEhRkKEOMSWc/gBXxxKb2iDCdwLDv9av+sL3U="
+      SPM_WEBHOOK_URL: "http://starchasers-nginx-config-creator-dev:8080/generate-config"
+volumes:
+  postgres:
+networks:
+  spm:
