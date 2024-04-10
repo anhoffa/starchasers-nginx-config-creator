@@ -16,5 +16,5 @@ RUN apk add --no-cache nginx && \
 
 WORKDIR /root/
 COPY --from=builder /app/server .
-
-#CMD ["./start.sh"]
+COPY start.sh start.sh
+ENTRYPOINT /bin/sh start.sh

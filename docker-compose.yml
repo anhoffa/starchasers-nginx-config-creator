@@ -1,19 +1,19 @@
 version: '3.8'
 
 services:
-  nginx-config-creator:
-    build:
-      context: .
+  starchasers-nginx-config-creator:
+    image: starchasers-nginx-config-creator
     volumes:
       - type: volume
         source: backup_vol
         target: /app/persistent
+      - "./data:/etc/nginx"
     ports:
       - "80:80"
       - "8080:8080"
     environment:
       - CGO_ENABLED=0
-    command: [ "./start.sh" ]
+      - API_KEY=${API_KEY}
 
 volumes:
   backup_vol:
