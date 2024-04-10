@@ -14,7 +14,7 @@ stream {
         {{- end }}
         {{- if .HttpsEnabled }}
         upstream {{ .ContainerName }} {
-                server {{ .IP }}:443;
+                server {{ .Ip }}:443;
         }
         {{- end }}
         {{- end }}
@@ -36,7 +36,8 @@ http {
             listen 7070;
 
             location /healthz {
-                allow
+                allow {{ .HealthcheckAllowedIp }}
+                deny all;
                 access_log off;
                 return 200 'ok';
                 add_header Content-Type text/plain;
@@ -48,7 +49,7 @@ http {
         server {
                 server_name {{ .Name }};
                 location / {
-                        proxy_pass http://{{ .IP }}:80;
+                        proxy_pass http://{{ .Ip }}:80;
                         proxy_set_header Host $host;
                         proxy_set_header X-Forwarded_For $proxy_add_x_forwarded_for;
                         {{- if .HttpWebsocketsEnabled }}

@@ -16,6 +16,13 @@ func generateNginxConfig(jsonConfig []byte) (string, error) {
 		return "", fmt.Errorf("failed to unmarshall the supplied json: %w", err)
 	}
 
+	allowedIp := os.Getenv("HEALTHCHECK_ALLOWED_IP")
+	if allowedIp != "" {
+		config.HealthcheckAllowedIp = allowedIp
+	} else {
+		return "", fmt.Errorf("HEALTHCHECK_ALLOWED_IP is not set")
+	}
+
 	tmplBytes, err := os.ReadFile("nginxTemplate.tmpl")
 	if err != nil {
 		return "", fmt.Errorf("failed to read the template file: %w", err)
