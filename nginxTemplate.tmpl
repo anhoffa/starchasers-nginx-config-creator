@@ -32,6 +32,17 @@ http {
                 ''                      close;
         }
 
+        server {
+            listen 7070;
+
+            location /healthz {
+                allow
+                access_log off;
+                return 200 'ok';
+                add_header Content-Type text/plain;
+            }
+        }
+
         {{- range .Domains }}
         {{- if .HttpEnabled }}
         server {
