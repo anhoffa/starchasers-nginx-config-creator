@@ -7,7 +7,7 @@ import (
 var log = logging.Logger("config-creator")
 
 func main() {
-	log.Infow("Starting the services...")
+	log.Info("Starting the services...")
 	// todo: move path to env and add request to directus
 	//  if 5xx then:
 	if err := checkForSavedConfig("/app/persistent/nginxBackup.conf"); err != nil {

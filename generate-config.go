@@ -57,6 +57,8 @@ func validateNginxConfig(config string) (bool, error) {
 		return false, err
 	}
 
+	log.Info("Nginx configuration is valid")
+
 	// todo: what if it'll break halfway the saving process?
 	//  also move the path to env after discussing it
 	if err := saveInPersistentVolume(f.Name(), "/app/persistent/nginxBackup.conf"); err != nil {

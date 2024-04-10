@@ -34,6 +34,8 @@ func handleNginxConfigRequest(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	log.Info("Received request")
+
 	jsonConfig, err := io.ReadAll(r.Body)
 	if err != nil {
 		http.Error(w, "Error reading request body", http.StatusInternalServerError)

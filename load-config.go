@@ -35,17 +35,18 @@ func saveInPersistentVolume(src, dest string) error {
 	if err != nil {
 		return err
 	}
-	defer func(destFile *os.File) {
-		err := destFile.Close()
-		if err != nil {
-			log.Errorw("Error closing file", "error", err)
-		}
-	}(destFile)
 
 	_, err = io.Copy(destFile, sourceFile)
 	if err != nil {
 		return err
 	}
 
+	err = destFile.Close()
+	if err != nil {
+		log.Errorw("Error closing file", "error", err)
+		return err
+	}
+
+	log.Info("Config saved successfully")
 	return nil
 }
