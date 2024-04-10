@@ -12,7 +12,7 @@ func reloadNginxConfig() error {
 	if err := cmd.Run(); err != nil {
 		return fmt.Errorf("failed to reload Nginx configuration: %w", err)
 	}
-	fmt.Println("Nginx configuration reloaded successfully")
+	log.Infof("Nginx configuration reloaded successfully")
 	return nil
 }
 

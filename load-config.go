@@ -10,7 +10,12 @@ func checkForSavedConfig(src string) error {
 	if err != nil {
 		return err
 	}
-	defer srcFile.Close()
+	defer func(srcFile *os.File) {
+		err := srcFile.Close()
+		if err != nil {
+			log.Errorw("Error closing file", "error", err)
+		}
+	}(srcFile)
 	return nil
 }
 
@@ -19,13 +24,23 @@ func saveInPersistentVolume(src, dest string) error {
 	if err != nil {
 		return err
 	}
-	defer sourceFile.Close()
+	defer func(sourceFile *os.File) {
+		err := sourceFile.Close()
+		if err != nil {
+			log.Errorw("Error closing file", "error", err)
+		}
+	}(sourceFile)
 
 	destFile, err := os.Create(dest)
 	if err != nil {
 		return err
 	}
-	defer destFile.Close()
+	defer func(destFile *os.File) {
+		err := destFile.Close()
+		if err != nil {
+			log.Errorw("Error closing file", "error", err)
+		}
+	}(destFile)
 
 	_, err = io.Copy(destFile, sourceFile)
 	if err != nil {

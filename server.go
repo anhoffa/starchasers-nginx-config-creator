@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"io"
 	"net/http"
 	"os"
@@ -10,7 +9,7 @@ import (
 
 func startServer() {
 	http.HandleFunc("/generate-config", authMiddleware(handleNginxConfigRequest))
-	fmt.Println("Server is running on port 8080...")
+	log.Infof("Server is running on port 8080...")
 	if err := http.ListenAndServe(":8080", nil); err != nil {
 		panic(err)
 	}
@@ -43,24 +42,29 @@ func handleNginxConfigRequest(w http.ResponseWriter, r *http.Request) {
 
 	config, err := generateNginxConfig(jsonConfig)
 	if err != nil {
-		http.Error(w, fmt.Sprintf("Error parsing NGINX config: %s", err), http.StatusBadRequest)
+		log.Errorw("Error generating NGINX config", "error", err)
+		http.Error(w, "Error generating NGINX config", http.StatusBadRequest)
 		return
 	}
 
 	if _, err := validateNginxConfig(config); err != nil {
-		http.Error(w, fmt.Sprintf("Error validating NGINX config: %s", err), http.StatusBadRequest)
+		log.Errorw("Error validating NGINX config", "error", err)
+		http.Error(w, "Error validating NGINX config", http.StatusBadRequest)
 		return
 	}
 
-	fmt.Println("Config: ", config) // todo: delete
+	log.Infow("Config: ", "config", config)
 
-	// todo: possibly restart the whole app in these cases
 	if err := modifyNginxConfig(config); err != nil {
 		http.Error(w, "Error reading request body", http.StatusInternalServerError)
+		log.Errorw("Error modifying NGINX config", "error", err)
+		os.Exit(1)
 		return
 	}
 	if err := reloadNginxConfig(); err != nil {
 		http.Error(w, "Error reading request body", http.StatusInternalServerError)
+		log.Errorw("Error reloading NGINX config", "error", err)
+		os.Exit(1)
 		return
 	}
 
