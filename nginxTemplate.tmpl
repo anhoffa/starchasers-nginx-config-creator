@@ -9,11 +9,11 @@ stream {
         {{- range .Domains }}
         {{- if .HttpEnabled }}
         map $ssl_preread_server_name $name {
-                {{ .Name }} {{ .Owner }};
+                {{ .Name }} {{ .ContainerName }};
         }
         {{- end }}
         {{- if .HttpsEnabled }}
-        upstream {{ .Owner }} {
+        upstream {{ .ContainerName }} {
                 server {{ .IP }}:443;
         }
         {{- end }}

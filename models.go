@@ -2,11 +2,11 @@ package main
 
 type Domain struct {
 	Name                  string `json:"name"`
-	Owner                 string `json:"owner"`
+	ContainerName         string `json:"container_name"`
 	IP                    string `json:"ip"`
-	HTTPEnabled           bool   `json:"http_enabled"`
-	HTTPSEnabled          bool   `json:"https_enabled"`
-	HTTPWebsocketsEnabled bool   `json:"http_websockets_enabled"`
+	HttpEnabled           bool   `json:"http_enabled"`
+	HttpsEnabled          bool   `json:"https_enabled"`
+	HttpWebsocketsEnabled bool   `json:"http_websockets_enabled"`
 }
 
 type Config struct {

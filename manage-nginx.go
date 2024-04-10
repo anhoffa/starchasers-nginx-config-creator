@@ -6,8 +6,8 @@ import (
 	"os/exec"
 )
 
-// reloadNginxConfiguration reloads the Nginx configuration without stopping the service
-func reloadNginxConfiguration() error {
+// reloadNginxConfig reloads the Nginx configuration without stopping the service
+func reloadNginxConfig() error {
 	cmd := exec.Command("nginx", "-s", "reload")
 	if err := cmd.Run(); err != nil {
 		return fmt.Errorf("failed to reload Nginx configuration: %w", err)

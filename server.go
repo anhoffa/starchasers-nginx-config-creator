@@ -1,7 +1,6 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
 	"io"
 	"net/http"
@@ -12,7 +11,7 @@ import (
 func startServer() {
 	http.HandleFunc("/generate-config", authMiddleware(handleNginxConfigRequest))
 	fmt.Println("Server is running on port 8080...")
-	if err := http.ListenAndServe("localhost:8080", nil); err != nil {
+	if err := http.ListenAndServe(":8080", nil); err != nil {
 		panic(err)
 	}
 }
@@ -60,15 +59,11 @@ func handleNginxConfigRequest(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Error reading request body", http.StatusInternalServerError)
 		return
 	}
-	if err := reloadNginxConfiguration(); err != nil {
+	if err := reloadNginxConfig(); err != nil {
 		http.Error(w, "Error reading request body", http.StatusInternalServerError)
 		return
 	}
 
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
-	if err := json.NewEncoder(w).Encode(config); err != nil {
-		http.Error(w, "Error reading request body", http.StatusInternalServerError)
-		return
-	}
 }

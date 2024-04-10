@@ -13,18 +13,23 @@ func generateNginxConfig(jsonConfig []byte) (string, error) {
 	var config Config
 	err := json.Unmarshal(jsonConfig, &config)
 	if err != nil {
-		return "", fmt.Errorf("Unmarshall: %w", err)
+		return "", fmt.Errorf("failed to unmarshall the supplied json: %w", err)
 	}
 
-	tmpl, err := template.New("nginxTemplate.tmpl").Parse("nginxTemplate.tmpl")
+	tmplBytes, err := os.ReadFile("nginxTemplate.tmpl")
 	if err != nil {
-		return "", fmt.Errorf("template.New: %w", err)
+		return "", fmt.Errorf("failed to read the template file: %w", err)
+	}
+
+	tmpl, err := template.New("nginxTemplate.tmpl").Parse(string(tmplBytes))
+	if err != nil {
+		return "", fmt.Errorf("failed to parse the template: %w", err)
 	}
 
 	var result bytes.Buffer
 	err = tmpl.Execute(&result, config)
 	if err != nil {
-		return "", fmt.Errorf("buffer: %w", err)
+		return "", fmt.Errorf("failed to execute the template: %w", err)
 	}
 
 	return result.String(), nil
