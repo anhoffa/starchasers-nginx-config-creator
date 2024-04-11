@@ -17,11 +17,10 @@ func generateNginxConfig(jsonConfig []byte) (string, error) {
 	}
 
 	allowedIp := os.Getenv("HEALTHCHECK_ALLOWED_IP")
-	if allowedIp != "" {
-		config.HealthcheckAllowedIp = allowedIp
-	} else {
+	if allowedIp == "" {
 		return "", fmt.Errorf("HEALTHCHECK_ALLOWED_IP is not set")
 	}
+	config.HealthcheckAllowedIp = allowedIp
 
 	tmplBytes, err := os.ReadFile("nginxTemplate.tmpl")
 	if err != nil {
