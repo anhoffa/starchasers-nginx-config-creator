@@ -4,7 +4,18 @@ import (
 	"fmt"
 	"github.com/annahoffa/starchasers-nginx-config-creator/utils"
 	"os"
+	"os/exec"
 )
+
+// todo add docs everywhere
+
+func startNginx() error {
+	if err := exec.Command("nginx", "-g", "daemon off;").Start(); err != nil {
+		return err
+	}
+	log.Info("Nginx started successfully")
+	return nil
+}
 
 // reloadNginxConfig reloads the Nginx configuration without stopping the service
 func reloadNginxConfig() error {
