@@ -7,8 +7,7 @@ import (
 	"os/exec"
 )
 
-// todo add docs everywhere
-
+// startNginx starts the Nginx service in the foreground as the child process.
 func startNginx() error {
 	if err := exec.Command("nginx", "-g", "daemon off;").Start(); err != nil {
 		return err
@@ -17,7 +16,7 @@ func startNginx() error {
 	return nil
 }
 
-// reloadNginxConfig reloads the Nginx configuration without stopping the service
+// reloadNginxConfig reloads the Nginx configuration without stopping the service.
 func reloadNginxConfig() error {
 	if err := utils.RedirectCmdOutput("nginx", "-s", "reload"); err != nil {
 		return fmt.Errorf("failed to reload Nginx configuration: %w", err)
@@ -26,15 +25,17 @@ func reloadNginxConfig() error {
 	return nil
 }
 
+// modifyNginxConfig modifies the Nginx configuration file by overwriting it with a new configuration.
+// It should be used only after the configuration has been validated with validateNginxConfig.
 func modifyNginxConfig(newConfig string) error {
-	nginxConfigPath := os.Getenv("NGINX_CONFIG_PATH")
+	dir := os.Getenv("NGINX_CONFIG_DIR_PATH")
 
-	err := os.WriteFile(nginxConfigPath+"nginx.tmp", []byte(newConfig), 0644)
+	err := os.WriteFile(dir+"nginx.tmp", []byte(newConfig), 0644)
 	if err != nil {
 		return fmt.Errorf("error writing the modified config file: %w", err)
 	}
 
-	if err := os.Rename(nginxConfigPath+"nginx.tmp", nginxConfigPath+"nginx.conf"); err != nil {
+	if err := os.Rename(dir+"nginx.tmp", dir+"nginx.conf"); err != nil {
 		return err
 	}
 

@@ -46,6 +46,12 @@ func validateNginxConfig(config string) error {
 	if err != nil {
 		return err
 	}
+	defer func(name string) {
+		err := os.Remove(name)
+		if err != nil {
+			log.Warnw("Error removing temporary file", "error", err)
+		}
+	}(f.Name())
 
 	if _, err := f.WriteString(config); err != nil {
 		return err
@@ -59,11 +65,5 @@ func validateNginxConfig(config string) error {
 	}
 
 	log.Info("Nginx configuration is valid")
-
-	// todo: what if it'll break halfway the saving process?
-	if err := saveInPersistentVolume(f.Name(), nginxConfigFilePath); err != nil {
-		return err
-	}
-
 	return nil
 }
