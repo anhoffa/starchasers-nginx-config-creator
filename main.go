@@ -24,11 +24,10 @@ func main() {
 	logging.SetAllLoggers(logging.LevelInfo)
 	log.Info("Starting the services...")
 	// todo: add request to directus (if 5xx then:...)
-	// todo 2: start nginx by app instead of script.sh
+	// todo 2: delete script.sh after testing
 
-	if err := startNginx(); err != nil {
-		log.Fatalw("Failed to start Nginx: %v", "error", err)
-		os.Exit(1)
+	if err := setupNginxConfig(startNginx, []byte("{}")); err != nil {
+		log.Fatalw("Failed to setup Nginx: %v", "error", err)
 	}
 
 	if err := checkForSavedConfig(nginxConfigFilePath); err != nil {

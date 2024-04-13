@@ -41,3 +41,31 @@ func modifyNginxConfig(newConfig string) error {
 
 	return nil
 }
+
+// setupNginxConfig generates, validates, modifies, and (re)loads the Nginx configuration.
+func setupNginxConfig(loadFunc func() error, jsonConfig []byte) error {
+	config, err := generateNginxConfig(jsonConfig)
+	if err != nil {
+		log.Errorw("Error generating NGINX config", "error", err)
+		return fmt.Errorf("error generating NGINX config: %w", err)
+	}
+
+	if err := validateNginxConfig(config); err != nil {
+		log.Errorw("Error validating NGINX config", "error", err)
+		return fmt.Errorf("error validating NGINX config: %w", err)
+	}
+
+	log.Infow("Config: ", "config", config)
+
+	if err := modifyNginxConfig(config); err != nil {
+		log.Errorw("Error modifying NGINX config", "error", err)
+		os.Exit(1)
+	}
+
+	if err := loadFunc(); err != nil {
+		log.Fatalw("Failed to start Nginx: %v", "error", err)
+		os.Exit(1)
+	}
+
+	return nil
+}
