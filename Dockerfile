@@ -5,7 +5,7 @@ COPY go.mod go.sum ./
 RUN go mod download
 
 COPY . .
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o server .
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o "config-creator" .
 
 FROM alpine:latest
 
@@ -14,7 +14,8 @@ RUN apk --no-cache add ca-certificates
 RUN apk add --no-cache nginx && \
     mkdir -p /run/nginx
 
+RUN rm /etc/nginx/nginx.conf
+
 WORKDIR /root/
-COPY --from=builder /app/server .
-COPY start.sh start.sh
-ENTRYPOINT /bin/sh start.sh
+COPY --from=builder /app/config-creator .
+ENTRYPOINT /root/config-creator

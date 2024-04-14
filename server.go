@@ -42,31 +42,9 @@ func handleNginxConfigRequest(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	config, err := generateNginxConfig(jsonConfig)
-	if err != nil {
-		log.Errorw("Error generating NGINX config", "error", err)
-		http.Error(w, "Error generating NGINX config", http.StatusBadRequest)
-		return
-	}
-
-	if err := validateNginxConfig(config); err != nil {
-		log.Errorw("Error validating NGINX config", "error", err)
-		http.Error(w, "Error validating NGINX config", http.StatusBadRequest)
-		return
-	}
-
-	log.Infow("Config: ", "config", config)
-
-	if err := modifyNginxConfig(config); err != nil {
-		http.Error(w, "Error reading request body", http.StatusInternalServerError)
-		log.Errorw("Error modifying NGINX config", "error", err)
-		os.Exit(1)
-		return
-	}
-	if err := reloadNginxConfig(); err != nil {
-		http.Error(w, "Error reading request body", http.StatusInternalServerError)
-		log.Errorw("Error reloading NGINX config", "error", err)
-		os.Exit(1)
+	if err := setupNginxConfig(reloadNginxConfig, jsonConfig); err != nil {
+		http.Error(w, "Failed to setup Nginx config", http.StatusInternalServerError)
+		log.Errorw("Failed to setup Nginx config", "error", err)
 		return
 	}
 
