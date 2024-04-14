@@ -24,7 +24,6 @@ func main() {
 	logging.SetAllLoggers(logging.LevelInfo)
 	log.Info("Starting the services...")
 	// todo: add request to directus (if 5xx then:...)
-	// todo 2: delete script.sh after testing
 
 	if err := setupNginxConfig(startNginx, []byte("{}")); err != nil {
 		log.Fatalw("Failed to setup Nginx: %v", "error", err)
