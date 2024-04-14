@@ -14,6 +14,8 @@ RUN apk --no-cache add ca-certificates
 RUN apk add --no-cache nginx && \
     mkdir -p /run/nginx
 
+RUN rm /etc/nginx/nginx.conf
+
 WORKDIR /root/
 COPY --from=builder /app/server .
 COPY start.sh start.sh
