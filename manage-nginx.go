@@ -59,12 +59,10 @@ func setupNginxConfig(loadFunc func() error, jsonConfig []byte) error {
 
 	if err := modifyNginxConfig(config); err != nil {
 		log.Errorw("Error modifying NGINX config", "error", err)
-		os.Exit(1)
 	}
 
 	if err := loadFunc(); err != nil {
 		log.Fatalw("Failed to start Nginx: %v", "error", err)
-		os.Exit(1)
 	}
 
 	return nil
