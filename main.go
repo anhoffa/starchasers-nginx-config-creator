@@ -7,16 +7,11 @@ import (
 
 var log = logging.Logger("config-creator")
 var nginxConfigFilePath = os.Getenv("NGINX_CONFIG_FILE_PATH")
-var nginxConfigDirPath = os.Getenv("NGINX_CONFIG_DIR_PATH")
 
 func init() {
 	if nginxConfigFilePath == "" {
 		log.Warnw("NGINX_CONFIG_FILE_PATH is not set. Using the default value...", "default", "/etc/nginx/nginx.conf")
 		nginxConfigFilePath = "/etc/nginx/nginx.conf"
-	}
-
-	if nginxConfigDirPath == "" {
-		nginxConfigDirPath = "/etc/nginx/"
 	}
 }
 
