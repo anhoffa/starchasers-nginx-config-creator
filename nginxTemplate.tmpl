@@ -38,8 +38,6 @@ http {
             listen 7070;
 
             location /healthz {
-                allow {{ .HealthcheckAllowedIp }};
-                deny all;
                 access_log off;
                 return 200 'ok';
                 add_header Content-Type text/plain;

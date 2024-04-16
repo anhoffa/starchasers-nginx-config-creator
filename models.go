@@ -10,6 +10,5 @@ type Domain struct {
 }
 
 type Config struct {
-	Domains              []Domain `json:"domains"`
-	HealthcheckAllowedIp string   `json:"healthcheck_allowed_ip"`
+	Domains []Domain `json:"domains"`
 }

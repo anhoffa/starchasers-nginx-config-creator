@@ -16,7 +16,6 @@ services:
     environment:
       - CGO_ENABLED=0
       - API_KEY=${API_KEY}
-      - HEALTHCHECK_ALLOWED_IP=${HEALTHCHECK_ALLOWED_IP}
 
 volumes:
   backup_vol:
