@@ -3,6 +3,7 @@ package main
 import (
 	logging "github.com/ipfs/go-log/v2"
 	"os"
+	"runtime"
 )
 
 var log = logging.Logger("config-creator")
@@ -37,5 +38,7 @@ func main() {
 		log.Fatalw("Failed to start Nginx: %v", "error", err)
 	}
 
-	startServer()
+	go startServer()
+	notifyAdmin()
+	runtime.Goexit()
 }
