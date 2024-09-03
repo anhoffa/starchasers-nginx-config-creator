@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/annahoffa/starchasers-nginx-config-creator/utils"
+	"github.com/anhoffa/starchasers-nginx-config-creator/utils"
 	"os"
 	"os/exec"
 	"path/filepath"

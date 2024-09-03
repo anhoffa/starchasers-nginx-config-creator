@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"github.com/annahoffa/starchasers-nginx-config-creator/utils"
+	"github.com/anhoffa/starchasers-nginx-config-creator/utils"
 	"os"
 	"text/template"
 )
