@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="go build github.com/anhoffa/starchasers-nginx-config-creator" type="GoApplicationRunConfiguration" factoryName="Go Application" nameIsGenerated="true">
+  <configuration default="false" name="Run dev" type="GoApplicationRunConfiguration" factoryName="Go Application">
     <module name="starchasers-nginx-config-creator" />
     <target name="root@127.0.0.1:8022" />
     <working_directory value="$PROJECT_DIR$" />
