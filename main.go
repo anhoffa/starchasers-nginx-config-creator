@@ -19,7 +19,6 @@ func init() {
 func main() {
 	logging.SetAllLoggers(logging.LevelInfo)
 	log.Info("Starting the services...")
-	// todo: add request to directus (if 5xx then:...)
 
 	if err := checkForSavedConfig(nginxConfigFilePath); err != nil {
 		log.Warnw("No saved Nginx configuration found. Starting the services without it...", "error", err)
