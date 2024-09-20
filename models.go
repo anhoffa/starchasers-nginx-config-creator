@@ -12,3 +12,13 @@ type Domain struct {
 type Config struct {
 	Domains []Domain `json:"domains"`
 }
+
+type Container struct {
+	ContainerName string
+	Ip            string
+}
+
+type TemplateParams struct {
+	Domains    []Domain
+	Containers []Container
+}
