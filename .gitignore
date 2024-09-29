@@ -5,7 +5,6 @@
 go.work
 
 # IDEs
-.idea/
 .vscode/
 
 .env.*

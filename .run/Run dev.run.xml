@@ -1,0 +1,17 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Run dev" type="GoApplicationRunConfiguration" factoryName="Go Application">
+    <module name="starchasers-nginx-config-creator" />
+    <target name="root@127.0.0.1:8022" />
+    <working_directory value="$PROJECT_DIR$" />
+    <envs>
+      <env name="ADMIN_NOTIFY_TOKEN" value="5kLPPjXqIunFJBtLqGmqFxtZLm9tIhoI" />
+      <env name="ADMIN_NOTIFY_URL" value="http://directus:8055/endpoint-trigger-webhook/trigger-webhook" />
+      <env name="API_KEY" value="09sPuPvEhRkKEOMSWc/gBXxxKb2iDCdwLDv9av+sL3U=" />
+    </envs>
+    <kind value="PACKAGE" />
+    <package value="github.com/anhoffa/starchasers-nginx-config-creator" />
+    <directory value="$PROJECT_DIR$" />
+    <filePath value="$PROJECT_DIR$" />
+    <method v="2" />
+  </configuration>
+</component>

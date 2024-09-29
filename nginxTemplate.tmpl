@@ -7,17 +7,18 @@ events {
 
 {{- if .Domains }}
 stream {
-        {{- range .Domains }}
-        {{- if .HttpEnabled }}
+
         map $ssl_preread_server_name $name {
+                {{- range .Domains }}
+                {{- if .HttpsEnabled }}
                 {{ .Name }} {{ .ContainerName }};
+                {{- end }}
+                {{- end }}
         }
-        {{- end }}
-        {{- if .HttpsEnabled }}
+        {{- range .Containers }}
         upstream {{ .ContainerName }} {
                 server {{ .Ip }}:443;
         }
-        {{- end }}
         {{- end }}
 
         server {

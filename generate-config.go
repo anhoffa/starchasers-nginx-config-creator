@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"github.com/annahoffa/starchasers-nginx-config-creator/utils"
+	"github.com/anhoffa/starchasers-nginx-config-creator/utils"
 	"os"
 	"text/template"
 )
@@ -27,12 +27,29 @@ func generateNginxConfig(jsonConfig []byte) (string, error) {
 	}
 
 	var result bytes.Buffer
-	err = tmpl.Execute(&result, config)
+	err = tmpl.Execute(&result, prepareTemplateParams(&config))
 	if err != nil {
 		return "", fmt.Errorf("failed to execute the template: %w", err)
 	}
 
 	return result.String(), nil
+}
+
+func prepareTemplateParams(config *Config) TemplateParams {
+	var containers []Container
+	var existingNames = map[string]bool{}
+
+	for _, domain := range config.Domains {
+		_, exists := existingNames[domain.ContainerName]
+		if !exists {
+			existingNames[domain.ContainerName] = true
+			containers = append(containers, Container{ContainerName: domain.ContainerName, Ip: domain.Ip})
+		}
+	}
+	return TemplateParams{
+		Containers: containers,
+		Domains:    config.Domains,
+	}
 }
 
 func validateNginxConfig(config string) error {

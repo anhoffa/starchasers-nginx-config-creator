@@ -1,4 +1,4 @@
-module github.com/annahoffa/starchasers-nginx-config-creator
+module github.com/anhoffa/starchasers-nginx-config-creator
 
 go 1.22.0
 
