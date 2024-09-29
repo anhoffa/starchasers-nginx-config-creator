@@ -13,6 +13,7 @@ stream {
                 {{- if .HttpsEnabled }}
                 {{ .Name }} {{ .ContainerName }};
                 {{- end }}
+                {{- end }}
         }
         {{- range .Containers }}
         upstream {{ .ContainerName }} {

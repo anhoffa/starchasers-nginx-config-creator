@@ -33,7 +33,7 @@ services:
       ADMIN_EMAIL: "admin@example.com"
       ADMIN_PASSWORD: "admin@example.com"
       SPM_WEBHOOK_SECRET: "09sPuPvEhRkKEOMSWc/gBXxxKb2iDCdwLDv9av+sL3U="
-      SPM_WEBHOOK_URL: "http://config-creator-dev:8080/generate-config"
+      SPM_WEBHOOK_URL: "http://config-creator:8080/generate-config"
   config-creator:
     build: .
     ports:
