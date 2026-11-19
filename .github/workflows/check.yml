@@ -1,0 +1,45 @@
+name: Check
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  go:
+    name: Build, test and scan Go code
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: actions/setup-go@d8cbb8045d7f43706b9177cceb36c1f91a6644d5 # v7.1.0
+        with:
+          go-version-file: go.mod
+
+      - run: go build ./...
+      - run: go vet ./...
+      - run: go test ./...
+      - run: go run golang.org/x/vuln/cmd/govulncheck@latest ./...
+
+  image:
+    name: Build and scan Docker image
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Build image
+        run: docker build --pull -t config-creator:ci .
+
+      - name: Print the packaged nginx version
+        run: docker run --rm --entrypoint nginx config-creator:ci -v
+
+      - name: Scan image for critical vulnerabilities
+        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # v0.36.0
+        with:
+          image-ref: config-creator:ci
+          severity: CRITICAL
+          ignore-unfixed: true
+          exit-code: '1'

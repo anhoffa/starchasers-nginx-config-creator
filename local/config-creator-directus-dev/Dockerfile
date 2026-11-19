@@ -1,4 +1,4 @@
-FROM golang:1.22
+FROM golang:1.27.4
 
 RUN apt update && apt install nginx libnginx-mod-stream openssh-server -y
 

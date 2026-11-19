@@ -1,0 +1,5 @@
+{"domains":[
+  {"name":"a.example.com","container_name":"app","ip":"10.0.0.20","http_enabled":true,"https_enabled":true,"http_websockets_enabled":false},
+  {"name":"b.example.com","container_name":"app","ip":"10.0.0.20","http_enabled":true,"https_enabled":true,"http_websockets_enabled":true},
+  {"name":"c.example.com","container_name":"other","ip":"10.0.0.21","http_enabled":false,"https_enabled":true,"http_websockets_enabled":false}
+]}

@@ -1,4 +1,4 @@
-FROM golang:1.22 as builder
+FROM golang:1.27.4-alpine3.24 AS builder
 
 WORKDIR /app
 COPY go.mod go.sum ./
@@ -7,8 +7,10 @@ RUN go mod download
 COPY . .
 RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o "config-creator" .
 
-FROM alpine:latest
+FROM alpine:3.24.4
 
+# pick up security fixes published after the base image was cut
+RUN apk upgrade --no-cache
 # ca-certificates are required for TLS connections within static binary applications
 RUN apk --no-cache add ca-certificates
 RUN apk add --no-cache nginx nginx-mod-stream curl && \

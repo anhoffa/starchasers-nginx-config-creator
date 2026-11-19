@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   starchasers-nginx-config-creator:
     image: starchasers-nginx-config-creator

@@ -1,0 +1,1 @@
+{"domains":[{"name":"both.example.com","container_name":"both","ip":"10.0.0.12","http_enabled":true,"https_enabled":true,"http_websockets_enabled":false}]}

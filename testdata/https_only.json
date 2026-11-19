@@ -1,0 +1,1 @@
+{"domains":[{"name":"tls.example.com","container_name":"secure","ip":"10.0.0.11","http_enabled":false,"https_enabled":true,"http_websockets_enabled":false}]}

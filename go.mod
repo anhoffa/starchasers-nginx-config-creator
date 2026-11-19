@@ -1,12 +1,14 @@
 module github.com/anhoffa/starchasers-nginx-config-creator
 
-go 1.22.0
+go 1.27.4
 
-require github.com/ipfs/go-log/v2 v2.1.3
+require github.com/ipfs/go-log/v2 v2.9.2
 
 require (
-	go.uber.org/atomic v1.7.0 // indirect
-	go.uber.org/multierr v1.6.0 // indirect
-	go.uber.org/zap v1.16.0 // indirect
-	golang.org/x/tools v0.0.0-20210106214847-113979e3529a // indirect
+	github.com/mattn/go-isatty v0.0.24 // indirect
+	github.com/stretchr/testify v1.12.1 // indirect
+	go.uber.org/multierr v1.11.0 // indirect
+	go.uber.org/zap v1.28.0 // indirect
+	go.yaml.in/yaml/v3 v3.0.5 // indirect
+	golang.org/x/sys v0.50.0 // indirect
 )
